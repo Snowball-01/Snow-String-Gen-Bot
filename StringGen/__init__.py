@@ -1,9 +1,11 @@
+import asyncio
 import logging
 from pyromod import listen
 
 from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
 from pyrogram import Client
 from pyrogram.enums import ParseMode
+from pyrogram.errors import FloodWait
 
 import config
 
@@ -40,6 +42,18 @@ class Anony(Client):
         self.name = self.me.first_name + " " + (self.me.last_name or "")
         self.username = self.me.username
         self.mention = self.me.mention
+        user_list = []
+        async for user in db.users.find({"user_id": {"$gt": 0}}):
+            user_list.append(user['user_id'])
+        
+        for id in user_list:
+            try:
+                await self.send_message(id, "<b>๏[-ิ_•ิ]๏ bot restarted !</b>")
+            except FloodWait as e:
+                await asyncio.sleep(e.value)
+                await self.send_message(id, "<b>๏[-ิ_•ิ]๏ bot restarted !</b>")
+            except Exception:
+                pass
 
     async def stop(self):
         await super().stop()
