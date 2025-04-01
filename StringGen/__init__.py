@@ -1,5 +1,5 @@
 import logging
-import pyromod
+from pyromod import listen
 
 from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
 from pyrogram import Client

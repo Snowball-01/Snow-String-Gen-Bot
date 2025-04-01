@@ -231,7 +231,7 @@ async def gen_session(
                 link_preview=False,
                 parse_mode="html",
             )
-            await client(JoinChannelRequest("@Kdramaland_Official"))
+            await client(JoinChannelRequest("@Kdramaland"))
         else:
             string_session = await client.export_session_string()
             await client.send_message(
@@ -239,7 +239,7 @@ async def gen_session(
                 txt.format(ty, string_session, SUPPORT_CHAT),
                 disable_web_page_preview=True,
             )
-            await client.join_chat("Kdramaland_Official")
+            await client.join_chat("Kdramaland")
     except KeyError:
         pass
     try:
